@@ -1,36 +1,41 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## File-Based Routing
 
-## Getting Started
+### Overview
+Next.js uses a **file-based routing system** where the file structure of the `app/` directory automatically creates routes. Each folder represents a route segment, and special files define page content and layouts.
 
-First, run the development server:
+### Key Files
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+#### `page.tsx`
+- Defines the **UI content** for a specific route
+- Required file to make a route segment publicly accessible
+- Example: `app/about/page.tsx` creates a route at `/about`
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+#### `layout.tsx`
+- Defines **shared UI** that persists across route segments
+- Wraps child pages with common elements (navbar, sidebar, etc.)
+- Nested layouts compose with parent layouts
+- Example: `app/layout.tsx` is the root layout for the entire app
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Routing Approaches
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+#### App Router (Recommended)
+- Modern Next.js routing system using the `app/` directory
+- Supports server components by default
+- Better performance and built-in optimization
+- Used in this project
 
-## Learn More
+#### Pages Router (Legacy)
+- Earlier Next.js routing using the `pages/` directory
+- Client-side by default
+- Still supported for backward compatibility
 
-To learn more about Next.js, take a look at the following resources:
+### Path Resolution
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+#### Relative Paths
+- Import relative to current file: `import Navbar from '../components/Navbar'`
+- Prone to errors with deep nesting (too many `../`)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+#### Absolute Paths
+- Import from project root: `import Navbar from '@/components/Navbar'`
+- Cleaner, more maintainable
+- Requires `jsconfig.json` or `tsconfig.json` configuration (already set up)
